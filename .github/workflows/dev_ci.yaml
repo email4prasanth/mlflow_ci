@@ -1,0 +1,29 @@
+name: Delploy MLFLOW using github
+
+on:
+  push:
+    branches:
+     - master
+
+jobs:
+  mlfow-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requriments.txt
+          pip install dvc
+
+      - name: Run DVC pipeline
+        run: |
+          dvc repro
