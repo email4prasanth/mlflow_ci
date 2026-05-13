@@ -40,3 +40,10 @@ jobs:
           MODEL_STAGE: ${{ github.event.inputs.model_stage }}
         run: |
           dvc repro
+
+      - name: Run unit test
+        env:
+          DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
+          MODEL_STAGE: ${{ github.event.inputs.model_stage }}
+        run: |
+          python -m unittest tests/model_test.py
