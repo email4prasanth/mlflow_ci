@@ -29,7 +29,7 @@ def save_data(df:pd.DataFrame, filepath:str) -> None:
         raise Exception (f"Error in saving data to {filepath}:{e}")
 
 def main():
-    data_filepath = r"H:\MLOPS\ml_project_mlflow_pro\data\water_potability.csv"
+    data_filepath = r"data_folder/water_potability.csv"
     params_file = "params.yaml"
     raw_data_path = "./data/raw"
     try: 
