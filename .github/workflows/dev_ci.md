@@ -1,9 +1,19 @@
 name: Delploy MLFLOW using github
 
 on:
-  push:
-    branches:
-     - master
+  workflow_dispatch:
+    inputs:
+      model_stage:
+        description: "Choose model stage"
+        required: true
+        default: "staging"
+        type: choice
+        options:
+          - staging
+          - production
+          - archive
+          - promote
+          - list
 
 jobs:
   mlfow-deploy:
@@ -27,5 +37,6 @@ jobs:
       - name: Run DVC pipeline
         env:
           DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
+          MODEL_STAGE: ${{ github.event.inputs.model_stage }}
         run: |
           dvc repro

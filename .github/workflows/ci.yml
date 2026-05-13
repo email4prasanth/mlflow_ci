@@ -12,7 +12,7 @@ on:
           - staging
           - production
           - archive
-
+  
 jobs:
   test:
     runs-on: ubuntu-latest
