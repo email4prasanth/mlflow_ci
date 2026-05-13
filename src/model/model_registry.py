@@ -2,12 +2,26 @@
 import json
 from mlflow.tracking import MlflowClient
 import mlflow
-import dagshub
+
 from datetime import datetime
 import sys
 
-dagshub.init(repo_owner='email4prasanth', repo_name='mlflow_ci', mlflow=True)
-mlflow.set_experiment("Final_modle")
+# import dagshub
+# dagshub.init(repo_owner='email4prasanth', repo_name='mlflow_ci', mlflow=True)
+# mlflow.set_experiment("Final_modle")
+import os
+dagshub_token = os.getenv("DAGSHUB_TOKEN")
+if not dagshub_token:
+    raise EnvironmentError("DAGSHUB_TOKEN env variable is not set")
+
+os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_token
+os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
+
+dagshub_url = "https://dagshub.com/"
+repo_owner='email4prasanth'
+repo_name='mlflow_ci'
+mlflow.set_tracking_uri(f"{dagshub_url}/{repo_owner}/{repo_name}.mlflow")
+mlflow.set_experiment("Final_model")
 
 # Load run ID and model name from json
 reports_path = "reports/run_info.json"
