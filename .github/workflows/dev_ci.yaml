@@ -1,15 +1,15 @@
 name: Delploy MLFLOW using github
 
-# on:
-#   push:
-#     branches:
-#      - master
-
 on:
+  push:
+    branches:
+     - master
+
+
   workflow_dispatch:
     inputs:
       model_stage:
-        description: "Model stage"
+        description: "Choose model stage"
         required: true
         default: "staging"
         type: choice
