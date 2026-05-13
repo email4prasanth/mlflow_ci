@@ -5,7 +5,8 @@ from sklearn.metrics import recall_score, f1_score, precision_score, accuracy_sc
 import os
 import pandas as pd
 
-dagshub_token = os.environ("DAGSHUB_TOKEN")
+dagshub_token = os.getenv("DAGSHUB_TOKEN")
+
 if not dagshub_token:
     raise EnvironmentError("DAGSHUB_TOKEN environment variable is not set")
 
@@ -48,7 +49,7 @@ class TestModelLoading(unittest.TestCase):
              self.fail(f"Failed to load {e}")
 
         self.assertIsNotNone(loaded_model, "The loaded model is None")
-        print("model successfully loaded from {version}.")
+        print(f"model successfully loaded from version {version}.")
 
 
 if __name__ == "__main__":
