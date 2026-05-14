@@ -37,8 +37,8 @@ stages:
     - reports/metrics.json
 
   model_registration:
-    # cmd: bash -c "python src/model/model_registry.py $MODEL_STAGE"
-    cmd: bash -c "python src/model/model_registry.py staging
+    cmd: bash -c "python src/model/model_registry.py $MODEL_STAGE"
+    # cmd: bash -c "python src/model/model_registry.py staging
     deps:
     - reports/metrics.json
     - src/model/model_registry.py
