@@ -51,6 +51,40 @@ class TestModelLoading(unittest.TestCase):
         self.assertIsNotNone(loaded_model, "The loaded model is None")
         print(f"model successfully loaded from version {version}.")
 
+    def test_model_performance(self):
+        client = MlflowClient()
+        model_version = client.get_model_version_by_alias(
+            model_name,
+            "Staging"
+        )
+
+        version = model_version.version
+        model_uri = f"models:/{model_name}@Staging"
+        loaded_model = mlflow.pyfunc.load_model(model_uri)
+
+        test_data_path = "./data/processed/test_processed.csv"
+        if not os.path.exists(test_data_path):
+            self.fail(f"Test data path not found {test_data_path}")
+        test_data = pd.read_csv(test_data_path)
+        x_test = test_data.drop(columns=['Potability'], axis=1)
+        y_test = test_data['Potability']
+
+        predicitons = loaded_model.predict(x_test)
+
+        accuracy = accuracy_score(y_test , predicitons)
+        precision =  precision_score(y_test, predicitons)
+        recall = recall_score(y_test, predicitons)
+        f1_s = f1_score(y_test, predicitons)
+
+        print("accuracy",accuracy)
+        print("precision",precision)
+        print("recall", recall)
+        print("f1_s", f1_s)
+
+        self.assertGreaterEqual(accuracy, 0.3)
+        self.assertGreaterEqual(precision, 0.3)
+        self.assertGreaterEqual(recall, 0.3)
+        self.assertGreaterEqual(f1_s, 0.3)
 
 if __name__ == "__main__":
      unittest.main()
