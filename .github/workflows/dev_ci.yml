@@ -54,4 +54,4 @@ jobs:
           DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
           MODEL_STAGE: ${{ github.event.inputs.model_stage }}
         run: |
-          python scripts/production.py
+          python scripts/production.py production
